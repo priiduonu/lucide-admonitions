@@ -1,0 +1,379 @@
+\DocumentMetadata{
+  pdfversion=1.7,
+  lang=en
+}
+% \documentclass{article}
+% \documentclass{report}
+% \documentclass{book}
+\documentclass{scrartcl}
+% \documentclass{scrreprt}
+% \documentclass{scrbook}
+
+\ifdefined \KOMAClassName
+	\KOMAoptions{parskip=half}
+\fi
+
+\usepackage{tgtermes}
+\usepackage{inconsolata}
+\usepackage[semibold,scale=0.907]{cabin}
+
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+\usepackage[english]{babel}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[titles]{lucide-admonitions}
+% \usepackage[titles,breakable]{lucide-admonitions}
+% \usepackage[breakable]{lucide-admonitions}
+% \usepackage{lucide-admonitions}
+
+\title{Lucide Admonitions}
+\subtitle{version 0.1}
+\author{Priit Mustasaar}
+
+\makeatletter
+\hypersetup{
+  pdftitle={\@title},
+  pdfauthor={\@author}
+}
+\makeatother
+
+% define new environment for demonstration
+\newenvironment{AdmonitionRemark}
+  {\begin{AdmonitionBase}{\lucideicon{pen}}{Plum}{Remark}}
+  {\end{AdmonitionBase}}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Provides environments for rendering admonition boxes in multiple languages.
+\end{abstract}
+
+\begin{AdmonitionNote}
+The source code and documentation are available at GitHub repository%
+\footnote{\url{https://github.com/priiduonu/lucide-admonitions}}.
+\end{AdmonitionNote}
+
+
+\section{Installation}
+
+The package can be installed via CTAN or manually.
+
+If your \TeX{} distribution provides \texttt{lucide-admonitions}, install it
+using your package manager (e.g.\ \texttt{tlmgr} for \TeX~Live or the MiK\TeX{}
+console).
+
+Alternatively, download the package files from the repository and place them
+in a directory where \LaTeX{} can find them, for example:
+
+\begin{itemize}
+  \item in the same directory as your document, or
+  \item in a local or user \texttt{texmf} tree
+\end{itemize}
+
+After installation, update the filename database if necessary (e.g.\ by
+running \texttt{texhash} or \texttt{mktexlsr}).
+
+
+\section{Dependencies}
+
+The \texttt{tcolorbox} (with \texttt{skins} and \texttt{breakable} libraries),
+\texttt{xcolor}, \texttt{translations}, \texttt{lucide-icons} packages are
+required and loaded by the package.
+
+
+\section{Usage}
+
+Load the package in the document preamble:
+
+\begin{verbatim}
+  \usepackage[<options>]{lucide-admonitions}
+\end{verbatim}
+
+Use any of the predefined admonition environments
+(see Section~\ref{sec:admonition_types}) in the document body:
+
+\begin{verbatim}
+  \begin{AdmonitionNote}
+    ...
+  \end{AdmonitionNote}
+\end{verbatim}
+
+
+\section{Package options}\label{sec:options}
+
+One or more of the following options may be specified, separated by commas:
+
+\begin{itemize}
+\item \texttt{breakable} -- allow admonition boxes to break across pages (default: \texttt{false}).
+\item \texttt{titles} -- display the box type as a title next to the icon (default: \texttt{false}).
+\end{itemize}
+
+If the \texttt{titles} option is set, the admonition boxes include the default
+title:
+
+\begin{AdmonitionExample}[Example]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.
+\end{AdmonitionExample}
+
+Without the \texttt{titles} option, the default title is not displayed:
+
+\begin{AdmonitionExample}[]
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.
+\end{AdmonitionExample}
+
+
+\section{Admonition types}\label{sec:admonition_types}
+
+The following types are defined, combining those available in MkDocs and
+Zensical:
+
+\begin{AdmonitionNote}
+This is Note
+\end{AdmonitionNote}
+
+\begin{AdmonitionAttention}
+This is Attention
+\end{AdmonitionAttention}
+
+\begin{AdmonitionCaution}
+This is Caution
+\end{AdmonitionCaution}
+
+\begin{AdmonitionWarning}
+This is Warning
+\end{AdmonitionWarning}
+
+\begin{AdmonitionDanger}
+This is Danger
+\end{AdmonitionDanger}
+
+\begin{AdmonitionError}
+This is Error
+\end{AdmonitionError}
+
+\begin{AdmonitionHint}
+This is Hint
+\end{AdmonitionHint}
+
+\begin{AdmonitionImportant}
+This is Important
+\end{AdmonitionImportant}
+
+\begin{AdmonitionTip}
+This is Tip
+\end{AdmonitionTip}
+
+\begin{AdmonitionAbstract}
+This is Abstract
+\end{AdmonitionAbstract}
+
+\begin{AdmonitionInfo}
+This is Info
+\end{AdmonitionInfo}
+
+\begin{AdmonitionSuccess}
+This is Success
+\end{AdmonitionSuccess}
+
+\begin{AdmonitionQuestion}
+This is Question
+\end{AdmonitionQuestion}
+
+\begin{AdmonitionFailure}
+This is Failure
+\end{AdmonitionFailure}
+
+\begin{AdmonitionBug}
+This is Bug
+\end{AdmonitionBug}
+
+\begin{AdmonitionExample}
+This is Example
+\end{AdmonitionExample}
+
+\begin{AdmonitionQuote}
+This is Quote
+\end{AdmonitionQuote}
+
+
+\section{Custom titles}
+
+You may add a custom title as an optional parameter to the environment:
+
+\begin{verbatim}
+  \begin{AdmonitionNote}[Custom title]
+    ...
+  \end{AdmonitionNote}
+\end{verbatim}
+
+The custom title will override the default title when provided, and will
+appear even if the \texttt{titles} option is not set.
+
+\begin{AdmonitionTip}[Tip]
+You can use an empty custom title to prevent the title from appearing even if
+the \texttt{titles} option is set.
+\end{AdmonitionTip}
+
+\begin{AdmonitionCaution}[]
+This box has an empty custom title
+\end{AdmonitionCaution}
+
+
+\section{Changing existing types}
+
+Existing admonition boxes can be redefined using the \verb|\renewenvironment|
+command.
+
+\underline{Example:}
+
+\begin{verbatim}
+  \renewenvironment{AdmonitionNote}
+    {\begin{AdmonitionBase}{\lucideicon{pen}}{blueColor}{Idea}}
+    {\end{AdmonitionBase}}
+\end{verbatim}
+
+You can change the icon, color and default title as needed.
+
+
+\section{Adding new types}
+
+You can define new types of admonition boxes using the \verb|\newenvironment|
+command:
+
+\begin{verbatim}
+  \newenvironment{<AdmonitionType>}
+    {\begin{AdmonitionBase}{\lucideicon{<icon>}}{<color>}{<title>}}
+    {\end{AdmonitionBase}}
+\end{verbatim}
+
+\underline{Example:}
+
+\begin{verbatim}
+\newenvironment{AdmonitionRemark}
+  {\begin{AdmonitionBase}{\lucideicon{pen}}{Plum}{Remark}}
+  {\end{AdmonitionBase}}
+\end{verbatim}
+
+This results in:
+
+\begin{AdmonitionRemark}
+This is remark
+\end{AdmonitionRemark}
+
+\begin{AdmonitionTip}
+If extended color names are required (e.g.\ \texttt{dvipsnames},
+\texttt{svgnames}), load \texttt{xcolor} with the desired options before
+this package.
+\end{AdmonitionTip}
+
+
+\section{Styling}
+
+Although Zensical provides slightly different colors for each type,
+\texttt{lucide-admonitions} has reduced the palette to six colors. This does
+not prevent you from adding new types or redefining existing ones with your
+own colors.
+
+It also replaces some icons used by Zensical to achieve a more consistent
+visual style.
+
+The boxes honor the \verb|\parindent| and \verb|\parskip| values specified by
+the \verb|\documentclass|, with the exception of the first paragraph, which
+is always unindented (as in standard \LaTeX{} \verb|\section|).
+
+If a box has a title, the left and right margins inside the box are equal.
+Boxes without a title have a wider left margin so that the text aligns with
+the position where the title would normally appear.
+See Section~\ref{sec:options} for comparison.
+
+\begin{AdmonitionSuccess}[]
+The package has been tested with both standard \LaTeX{} and KOMA-Script
+classes.
+\end{AdmonitionSuccess}
+
+
+\section{Multilingual support}
+
+This package requires the \texttt{translations} package for multilingual
+support.
+
+When using \texttt{babel} or \texttt{polyglossia}, the default box titles are
+automatically translated according to the currently active language.
+
+If no translation is available for the selected language, the titles default
+to English.
+
+Examples for the "Abstract" admonition box:
+
+\selectlanguage{english}
+
+\begin{AdmonitionAbstract}
+English
+\end{AdmonitionAbstract}
+
+\selectlanguage{estonian}
+
+\begin{AdmonitionAbstract}
+Estonian
+\end{AdmonitionAbstract}
+
+\selectlanguage{french}
+
+\begin{AdmonitionAbstract}
+French
+\end{AdmonitionAbstract}
+
+\selectlanguage{german}
+
+\begin{AdmonitionAbstract}
+German
+\end{AdmonitionAbstract}
+
+\selectlanguage{english}
+
+The package provides the following translations:
+
+\begin{itemize}
+  \item English
+  \item Estonian
+  \item French
+  \item German
+\end{itemize}
+
+You are welcome to add support for additional languages by submitting a pull
+request to the package GitHub repository.
+
+\clearpage
+
+
+\section{Acknowledgements}
+
+This package was inspired by the look of Zensical admonitions%
+\footnote{\url{https://zensical.org/docs/authoring/admonitions/}}.
+
+It uses the Lucide icon set\footnote{\url{https://lucide.dev}}, which has been
+packaged for \LaTeX{} in the \texttt{lucide-icons} package%
+\footnote{\url{https://ctan.org/pkg/lucide-icons}} by Cédric Pierquet.
+
+The box environments are built using the \texttt{tcolorbox} package%
+\footnote{\url{https://ctan.org/pkg/tcolorbox}} by Thomas F.\ Sturm.
+
+The box titles are automatically translated using the \texttt{translations} package%
+\footnote{\url{https://ctan.org/pkg/translations}} by Clemens Niederberger.
+
+The box colors are defined using the \texttt{xcolor} package%
+\footnote{\url{https://www.ctan.org/pkg/xcolor}} by Dr.\ Uwe Kern.
+
+
+\end{document}

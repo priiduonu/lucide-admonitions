@@ -1,0 +1,13 @@
+# latex auxiliary files:
+
+*.aux
+*.lof
+*.log
+*.lot
+*.lop
+*.toc
+
+# compressed files:
+
+*.zip
+*.tar.gz

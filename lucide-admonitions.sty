@@ -1,0 +1,323 @@
+% Author     : Priit Mustasaar
+% Repository : https://github.com/priiduonu/lucide-admonitions
+% License    : LaTeX Project Public License v1.3c or later
+%              https://www.latex-project.org/lppl.txt
+% ----------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lucide-admonitions}[2026/04/28 v0.1 Lucide Admonitions]
+
+% required packages
+
+\RequirePackage{lucide-icons}
+\RequirePackage{xcolor}
+\RequirePackage{translations}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% package option: breakable (default: false)
+
+\newif\iflucide@breakable
+\DeclareOption{breakable}{\lucide@breakabletrue}
+
+% package option: titles (default: false)
+
+\newif\iflucide@titles
+\DeclareOption{titles}{\lucide@titlestrue}
+
+\ProcessOptions\relax
+
+% use colors from Google Logo Colors Color Palette:
+% https://www.color-hex.com/color-palette/67855
+
+\definecolor{blueColor}{HTML}{4285f4}
+\definecolor{redColor}{HTML}{ea4335}
+\definecolor{orangeColor}{HTML}{fbbc05}
+\definecolor{greenColor}{HTML}{34a853}
+\definecolor{purpleColor}{HTML}{673ab7}
+% add a matching gray:
+\definecolor{grayColor}{HTML}{a49a87}
+
+% prepare the title
+
+\newlength{\lucide@left}
+\newcommand{\lucide@gettitle}[2]{%
+  % #1 default title, #2 optional custom title
+
+  \iflucide@titles
+    \IfNoValueTF{#2}
+      {\def\lucide@title{\GetTranslation{#1}}}%
+      {\def\lucide@title{#2}}%
+  \else
+    \IfNoValueTF{#2}
+      {\def\lucide@title{}}%
+      {\def\lucide@title{#2}}%
+  \fi
+
+  % prepare the title block and set left margin
+  \ifx\lucide@title\empty
+    \def\lucide@titleblock{%
+      \strut%
+    }%
+    \setlength{\lucide@left}{24pt}%
+  \else
+    \def\lucide@titleblock{%
+      \strut\hspace*{18pt}\textbf{\lucide@title}\par%
+    }%
+    \setlength{\lucide@left}{6pt}%
+  \fi
+}
+
+% prepare the icon overlay
+
+\newcommand{\lucide@iconnode}[2]{%
+  \node[
+    anchor=base west,
+    xshift=4pt,
+    yshift=-8pt-\ht\strutbox,
+    text=#2
+  ] at (interior.north west)
+  {\scalebox{1.4}{#1}};
+}
+
+% define common base for admonition boxes
+
+\NewDocumentEnvironment{AdmonitionBase}{m m m o}
+% #1 icon, #2 color, #3 default title, #4 optional custom title
+{
+  \iflucide@breakable
+    \tcbset{breakable}
+  \fi
+
+  \lucide@gettitle{#3}{#4}
+
+  \begin{tcolorbox}[
+    % drop shadow,
+    % drop fuzzy shadow,
+    enhanced,
+    colback=#2!10,
+    colframe=#2!25,
+    boxrule=1pt,
+    arc=2pt,
+    outer arc=2pt,
+    left=\lucide@left,
+    right=6pt,
+    before skip=1.0\baselineskip,
+    after skip=1.0\baselineskip,
+    parbox=false,
+    before upper={
+      \setlength{\lineskiplimit}{0pt}%
+      \setlength{\lineskip}{0pt}%
+      \lucide@titleblock%
+      \noindent%
+    },
+    % show the icon only in the first part of a breakable box
+    overlay={\lucide@iconnode{#1}{#2}},
+    overlay middle and last={}
+  ]
+}
+{
+  \end{tcolorbox}
+}
+
+% define translations
+
+% Note
+\DeclareTranslation{English}{Note}{Note}
+\DeclareTranslation{Estonian}{Note}{Märkus}
+\DeclareTranslation{German}{Note}{Notiz}
+\DeclareTranslation{French}{Note}{Remarque}
+
+% Attention
+\DeclareTranslation{English}{Attention}{Attention}
+\DeclareTranslation{Estonian}{Attention}{Tähelepanu}
+\DeclareTranslation{German}{Attention}{Achtung}
+\DeclareTranslation{French}{Attention}{Attention}
+
+% Caution
+\DeclareTranslation{English}{Caution}{Caution}
+\DeclareTranslation{Estonian}{Caution}{Ettevaatust}
+\DeclareTranslation{German}{Caution}{Vorsicht}
+\DeclareTranslation{French}{Caution}{Prudence}
+
+% Warning
+\DeclareTranslation{English}{Warning}{Warning}
+\DeclareTranslation{Estonian}{Warning}{Hoiatus}
+\DeclareTranslation{German}{Warning}{Warnung}
+\DeclareTranslation{French}{Warning}{Avertissement}
+
+% Danger
+\DeclareTranslation{English}{Danger}{Danger}
+\DeclareTranslation{Estonian}{Danger}{Oht}
+\DeclareTranslation{German}{Danger}{Gefahr}
+\DeclareTranslation{French}{Danger}{Danger}
+
+% Error
+\DeclareTranslation{English}{Error}{Error}
+\DeclareTranslation{Estonian}{Error}{Viga}
+\DeclareTranslation{German}{Error}{Fehler}
+\DeclareTranslation{French}{Error}{Erreur}
+
+% Hint
+\DeclareTranslation{English}{Hint}{Hint}
+\DeclareTranslation{Estonian}{Hint}{Vihje}
+\DeclareTranslation{German}{Hint}{Tipp}
+\DeclareTranslation{French}{Hint}{Astuce}
+
+% Important
+\DeclareTranslation{English}{Important}{Important}
+\DeclareTranslation{Estonian}{Important}{Tähtis}
+\DeclareTranslation{German}{Important}{Wichtig}
+\DeclareTranslation{French}{Important}{Important}
+
+% Tip
+\DeclareTranslation{English}{Tip}{Tip}
+\DeclareTranslation{Estonian}{Tip}{Nõuanne}
+\DeclareTranslation{German}{Tip}{Tipp}
+\DeclareTranslation{French}{Tip}{Conseil}
+
+% Abstract
+\DeclareTranslation{English}{Abstract}{Abstract}
+\DeclareTranslation{Estonian}{Abstract}{Kokkuvõte}
+\DeclareTranslation{German}{Abstract}{Zusammenfassung}
+\DeclareTranslation{French}{Abstract}{Résumé}
+
+% Info
+\DeclareTranslation{English}{Info}{Info}
+\DeclareTranslation{Estonian}{Info}{Info}
+\DeclareTranslation{German}{Info}{Info}
+\DeclareTranslation{French}{Info}{Info}
+
+% Success
+\DeclareTranslation{English}{Success}{Success}
+\DeclareTranslation{Estonian}{Success}{Edu}
+\DeclareTranslation{German}{Success}{Erfolg}
+\DeclareTranslation{French}{Success}{Succès}
+
+% Question
+\DeclareTranslation{English}{Question}{Question}
+\DeclareTranslation{Estonian}{Question}{Küsimus}
+\DeclareTranslation{German}{Question}{Frage}
+\DeclareTranslation{French}{Question}{Question}
+
+% Failure
+\DeclareTranslation{English}{Failure}{Failure}
+\DeclareTranslation{Estonian}{Failure}{Tõrge}
+\DeclareTranslation{German}{Failure}{Fehler}
+\DeclareTranslation{French}{Failure}{Échec}
+
+% Bug
+\DeclareTranslation{English}{Bug}{Bug}
+\DeclareTranslation{Estonian}{Bug}{Bug}
+\DeclareTranslation{German}{Bug}{Bug}
+\DeclareTranslation{French}{Bug}{Bug}
+
+% Example
+\DeclareTranslation{English}{Example}{Example}
+\DeclareTranslation{Estonian}{Example}{Näide}
+\DeclareTranslation{German}{Example}{Beispiel}
+\DeclareTranslation{French}{Example}{Exemple}
+
+% Quote
+\DeclareTranslation{English}{Quote}{Quote}
+\DeclareTranslation{Estonian}{Quote}{Tsitaat}
+\DeclareTranslation{German}{Quote}{Zitat}
+\DeclareTranslation{French}{Quote}{Citation}
+
+% define admonition boxes
+% note: some default Zensical icons have been replaced below
+
+% types supported by MkDocs:
+
+% Note
+\newenvironment{AdmonitionNote}
+  % {\begin{AdmonitionBase}{\lucideicon{paperclip}}{blueColor}{Note}}
+  {\begin{AdmonitionBase}{\lucideicon{circle-alert}}{blueColor}{Note}}
+  {\end{AdmonitionBase}}
+
+% Attention
+\newenvironment{AdmonitionAttention}
+  {\begin{AdmonitionBase}{\lucideicon{triangle-alert}}{orangeColor}{Attention}}
+  {\end{AdmonitionBase}}
+
+% Caution
+\newenvironment{AdmonitionCaution}
+  {\begin{AdmonitionBase}{\lucideicon{triangle-alert}}{orangeColor}{Caution}}
+  {\end{AdmonitionBase}}
+
+% Warning
+\newenvironment{AdmonitionWarning}
+  {\begin{AdmonitionBase}{\lucideicon{triangle-alert}}{orangeColor}{Warning}}
+  {\end{AdmonitionBase}}
+
+% Danger
+\newenvironment{AdmonitionDanger}
+  % {\begin{AdmonitionBase}{\lucideicon{zap}}{redColor}{Danger}}
+  {\begin{AdmonitionBase}{\lucideicon{circle-x}}{redColor}{Danger}}
+  {\end{AdmonitionBase}}
+
+% Error
+\newenvironment{AdmonitionError}
+  {\begin{AdmonitionBase}{\lucideicon{circle-x}}{redColor}{Error}}
+  {\end{AdmonitionBase}}
+
+% Hint
+\newenvironment{AdmonitionHint}
+  {\begin{AdmonitionBase}{\lucideicon{circle-arrow-right}}{greenColor}{Hint}}
+  {\end{AdmonitionBase}}
+
+% Important
+\newenvironment{AdmonitionImportant}
+  {\begin{AdmonitionBase}{\lucideicon{circle-arrow-right}}{greenColor}{Important}}
+  {\end{AdmonitionBase}}
+
+% Tip
+\newenvironment{AdmonitionTip}
+  % {\begin{AdmonitionBase}{\lucideicon{flame}}{greenColor}{Tip}}
+  {\begin{AdmonitionBase}{\lucideicon{circle-arrow-right}}{greenColor}{Tip}}
+  {\end{AdmonitionBase}}
+
+% additional types supported by Material/Zensical:
+
+% Abstract
+\newenvironment{AdmonitionAbstract}
+  % {\begin{AdmonitionBase}{\lucideicon{notebook-text}}{blueColor}{Abstract}}
+  {\begin{AdmonitionBase}{\lucideicon{funnel}}{blueColor}{Abstract}}
+  {\end{AdmonitionBase}}
+
+% Info
+\newenvironment{AdmonitionInfo}
+  {\begin{AdmonitionBase}{\lucideicon{info}}{blueColor}{Info}}
+  {\end{AdmonitionBase}}
+
+% Success
+\newenvironment{AdmonitionSuccess}
+  % {\begin{AdmonitionBase}{\lucideicon{check}}{greenColor}{Success}}
+  {\begin{AdmonitionBase}{\lucideicon{circle-check}}{greenColor}{Success}}
+  {\end{AdmonitionBase}}
+
+% Question
+\newenvironment{AdmonitionQuestion}
+  {\begin{AdmonitionBase}{\lucideicon{circle-question-mark}}{greenColor}{Question}}
+  {\end{AdmonitionBase}}
+
+% Failure
+\newenvironment{AdmonitionFailure}
+  % {\begin{AdmonitionBase}{\lucideicon{octagon-alert}}{redColor}{Failure}}
+  {\begin{AdmonitionBase}{\lucideicon{circle-x}}{redColor}{Failure}}
+  {\end{AdmonitionBase}}
+
+% Bug
+\newenvironment{AdmonitionBug}
+  {\begin{AdmonitionBase}{\lucideicon{bug}}{redColor}{Bug}}
+  {\end{AdmonitionBase}}
+
+% Example
+\newenvironment{AdmonitionExample}
+  {\begin{AdmonitionBase}{\lucideicon{flask-conical}}{purpleColor}{Example}}
+  {\end{AdmonitionBase}}
+
+% Quote
+\newenvironment{AdmonitionQuote}
+  {\begin{AdmonitionBase}{\lucideicon{message-square-quote}}{grayColor}{Quote}}
+  {\end{AdmonitionBase}}
