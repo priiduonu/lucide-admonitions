@@ -83,3 +83,7 @@ types or add your own ones.
 - `tcolorbox` by Thomas F. Sturm
 - `translations` by Clemens Niederberger
 - `xcolor` by Uwe Kern
+
+## License
+
+Released under the [LaTeX Project Public License v1.3c](http://www.latex-project.org/lppl.txt) or later.
